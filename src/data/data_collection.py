@@ -26,6 +26,11 @@ def scrape_player_data(player_first_name, player_last_name):
 
     table_rows = soup.find_all('tr', id=lambda x: x and x.startswith('batting_gamelogs'))
 
+    totals_row = soup.find('tfoot').find('tr')
+
+    if totals_row:
+        table_rows.append(totals_row)
+
     data = []
 
     for row in table_rows:
@@ -55,7 +60,7 @@ def main():
 
     if not player_stats_df.empty:
 
-        with tempfile.NamedTemporaryFile(mode='w', delete=True, suffix='.csv') as tmp_file:
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp_file:
             player_stats_df.to_csv(tmp_file.name, index=False)
             print(f"Temporary CSV file created at {tmp_file.name}")
             temp_csv_path = tmp_file.name
@@ -67,3 +72,5 @@ def main():
     
 if __name__ == "__main__":
     temp_file_path = main()
+
+    #For future use, run the command os.remove(temp_file_path) to remove it after use.
