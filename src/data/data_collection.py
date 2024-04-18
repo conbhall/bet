@@ -5,19 +5,18 @@ import pandas as pd
 import tempfile
 import os
 
-def format_player_name(player_first_name, player_last_name):
+def format_player_url(player_first_name, player_last_name):
+
     formatted_last_name = player_last_name[:5]
     formatted_first_name = player_first_name[:2]
     formatted_name = formatted_last_name + formatted_first_name
-    return formatted_name.lower()
+
+    search_url = f'https://www.baseball-reference.com/players/gl.fcgi?id={formatted_name}01&t=b&year=2024#batting_gamelogs'
+
+    return search_url
 
 
-def scrape_player_data(player_first_name, player_last_name):
-    #Format name for URL search
-    player_name = format_player_name(player_first_name, player_last_name)
-
-    #Create search URL
-    search_url = f'https://www.baseball-reference.com/players/gl.fcgi?id={player_name}01&t=b&year=2024#batting_gamelogs'
+def scrape_player_data(search_url):
 
     response = requests.get(search_url)
     response.raise_for_status()
@@ -51,17 +50,13 @@ def scrape_player_data(player_first_name, player_last_name):
 
     return df
 
-def main():
 
-    first_name = input("Enter Player's First Name: ")
-    last_name = input("Enter Player's Last Name: ")
+def convert_raw_to_csv(player_raw_data_df):
 
-    player_stats_df = scrape_player_data(first_name, last_name)
-
-    if not player_stats_df.empty:
+    if not player_raw_data_df.empty:
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.csv') as tmp_file:
-            player_stats_df.to_csv(tmp_file.name, index=False)
+            player_raw_data_df.to_csv(tmp_file.name, index=False)
             print(f"Temporary CSV file created at {tmp_file.name}")
             temp_csv_path = tmp_file.name
 
@@ -70,7 +65,3 @@ def main():
         print("No data was found.")
         return None
     
-if __name__ == "__main__":
-    temp_file_path = main()
-
-    #For future use, run the command os.remove(temp_file_path) to remove it after use.
