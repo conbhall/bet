@@ -13,7 +13,7 @@ BET/
 |
 |-- src/        # Directory for Source Code
 |   |-- data/
-|   |   |-- data_collection.py      # Scrapes baseball-reference.com and creates a temp csv file containing batting stats for players in 2024 season.
+|   |   |-- data_collection.py      # Scrapes baseball-reference.com and creates a temp csv file containing batting stats for players in 2024 season. WIP
 |   |-- features/
 |   |-- models/
 |   |-- utilities/
@@ -22,7 +22,7 @@ BET/
 |
 |-- main.py     # Entry point for the program
 |
-|-- .gitignore  # To include the venv directory and other files that should not be committed
+|-- .gitignore  # To include the venv directory and other files that should not be committed # DO NOT EDIT!!!
 |
 |-- README.md   # Project documentation
 
