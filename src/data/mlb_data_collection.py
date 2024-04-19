@@ -5,15 +5,9 @@ import pandas as pd
 import tempfile
 import os
 
-def format_player_url(player_first_name, player_last_name):
+def format_player_url(formatted_player_key, year):
 
-    formatted_last_name = player_last_name[:5]
-    formatted_first_name = player_first_name[:2]
-    formatted_name = formatted_last_name + formatted_first_name
-
-    search_url = f'https://www.baseball-reference.com/players/gl.fcgi?id={formatted_name}01&t=b&year=2024#batting_gamelogs'
-
-    return search_url
+    return f'https://www.baseball-reference.com/players/gl.fcgi?id={formatted_player_key}&t=b&year={year}#batting_gamelogs'
 
 
 def scrape_player_data(search_url):
@@ -27,28 +21,34 @@ def scrape_player_data(search_url):
 
     totals_row = soup.find('tfoot').find('tr')
 
-    if totals_row:
-        table_rows.append(totals_row)
+    if table_rows:
 
-    data = []
+        if totals_row:
+            table_rows.append(totals_row)
 
-    for row in table_rows:
+        data = []
 
-        row_data = {}
-        for td in row.find_all('td'):
+        for row in table_rows:
 
-            stat_type = td['data-stat']
+            row_data = {}
+            for td in row.find_all('td'):
 
-            stat_value = td.text
+                stat_type = td['data-stat']
 
-            row_data[stat_type] = stat_value
+                stat_value = td.text
 
-        if row_data:
-            data.append(row_data)
+                row_data[stat_type] = stat_value
 
-    df = pd.DataFrame(data)
+            if row_data:
+                data.append(row_data)
 
-    return df
+        df = pd.DataFrame(data)
+
+        return df
+    
+    else:
+        return Exception
+
 
 
 def convert_raw_to_csv(player_raw_data_df):

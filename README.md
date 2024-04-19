@@ -13,10 +13,11 @@ BET/
 |
 |-- src/        # Directory for Source Code
 |   |-- data/
-|   |   |-- data_collection.py      # Scrapes baseball-reference.com and creates a temp csv file containing batting stats for players in 2024 season. WIP
+|   |   |-- mlb_data_collection.py      # Scrapes baseball-reference.com and creates a temp csv file containing batting stats for players in 2024 season. WIP
 |   |-- features/
 |   |-- models/
 |   |-- utilities/
+|   |   |-- mlb_player_verification.py  # Verifies requested player is currently active, and returns formatted player name and formatted player URL key.                   
 |
 |-- TestCode/   # Holds test code. Not important or necessary.
 |
