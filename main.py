@@ -1,5 +1,8 @@
-from src.data.mlb_data_collection import scrape_player_data, format_player_url, convert_raw_to_csv
+import pandas as pd
+
+from src.data.mlb_data_collection import scrape_player_data, scrape_platoon_data, scrape_hmvis_data, scrape_stad_data
 from src.utilities.mlb_player_verification import mlb_player_verification, mlb_name_formatter
+from src.data.mlb_data_processing import mlb_raw_stats_cleaner, mlb_platoon_raw_stats_cleaner, mlb_hmvis_raw_stats_cleaner, mlb_stad_raw_stats_cleaner, construct_clean_df, convert_df_to_csv
 
 def main():
     # Entry point for the entire program
@@ -17,14 +20,9 @@ def main():
 
         print(f"Gathering Raw Data for {formatted_name}...")
 
-        # Using formatted URL, create DataFrame and temp CSV file for storing raw stats
-        try: 
-            player_raw_stats_df = scrape_player_data(formatted_player_key, year)
-        except:
-            print(f"No data found for {formatted_name} in {year}.")
-            return
-        
-        player_raw_stats_csv = convert_raw_to_csv(player_raw_stats_df)
+        clean_df = construct_clean_df(formatted_name, formatted_player_key, year)
+
+        clean_df_csv = convert_df_to_csv(clean_df)
 
     else:
         print(f"No data found for {formatted_name} in {year}: {formatted_name} was or is not active.")
