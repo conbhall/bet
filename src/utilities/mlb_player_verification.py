@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def mlb_player_verification(first_name, last_name):
+def mlb_player_verification(first_name, last_name, year):
     initial = last_name[:1]
 
     full_name = f'{first_name[0].upper()}{first_name[1:]} {last_name[0].upper()}{last_name[1:]}'
@@ -21,9 +21,13 @@ def mlb_player_verification(first_name, last_name):
         active_players = initial_section.find_all('b')
         for players in active_players:
             player = players.find('a')
+            years_playing = players.get_text()[(len(players.get_text()) - 11):]
             if full_name == player.get_text():
-                player_link = player['href']
-                return player_link[11:20]
+                start_year = int(years_playing[1:5])
+                end_year = 2024
+                if year in range(start_year, end_year + 1):
+                    player_link = player['href']
+                    return player_link[11:20]
         
     return None
 
