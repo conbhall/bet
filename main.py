@@ -1,8 +1,8 @@
 import pandas as pd
 
-from src.data.mlb_data_collection import scrape_player_data, scrape_platoon_data, scrape_hmvis_data, scrape_stad_data
+from Data.raw.mlb_data_collection import scrape_player_data, scrape_platoon_data, scrape_hmvis_data, scrape_stad_data
 from src.utilities.mlb_player_verification import mlb_player_verification, mlb_name_formatter
-from src.data.mlb_data_processing import mlb_raw_stats_cleaner, mlb_platoon_raw_stats_cleaner, mlb_hmvis_raw_stats_cleaner, mlb_stad_raw_stats_cleaner, construct_clean_df, convert_df_to_csv
+from Data.processed.mlb_data_processing import mlb_raw_stats_cleaner, mlb_platoon_raw_stats_cleaner, mlb_hmvis_raw_stats_cleaner, mlb_stad_raw_stats_cleaner, construct_clean_df, convert_df_to_csv
 
 def main():
     # Entry point for the entire program
@@ -21,6 +21,7 @@ def main():
         print(f"Gathering Raw Data for {formatted_name}...")
 
         clean_df = construct_clean_df(formatted_name, formatted_player_key, year)
+        print(clean_df)
 
         clean_df_csv = convert_df_to_csv(clean_df)
 

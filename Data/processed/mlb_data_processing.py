@@ -1,7 +1,7 @@
 import pandas as pd
 import tempfile
 
-from src.data.mlb_data_collection import scrape_player_data, scrape_platoon_data, scrape_hmvis_data, scrape_stad_data
+from Data.raw.mlb_data_collection import scrape_player_data, scrape_platoon_data, scrape_hmvis_data, scrape_stad_data
 
 def mlb_raw_stats_cleaner(df):
     df.rename(columns={
@@ -16,7 +16,7 @@ def mlb_raw_stats_cleaner(df):
 
     all_columns = df.columns.tolist()
 
-    columns_to_keep = ['game_num', 'Home', 'AB', 'R', 'H', 'RBI', 'BB', 'SO', 'BA', 'OBP', 'SLG', 'OPS']
+    columns_to_keep = ['game_num', 'date_game', 'team_ID', 'Home', 'opp_ID', 'AB', 'R', 'H', 'RBI', 'BB', 'SO', 'BA', 'OBP', 'SLG', 'OPS']
 
     columns_to_drop = [column for column in all_columns if column not in columns_to_keep]
 

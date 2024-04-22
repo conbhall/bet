@@ -14,6 +14,7 @@ BET/
 |-- src/        # Directory for Source Code
 |   |-- data/
 |   |   |-- mlb_data_collection.py      # Scrapes baseball-reference.com and creates a temp csv file containing batting stats and other miscellaneous stats for players in any season they were active. WIP
+|   |   |-- mlb_data_processing.py      # Cleans the raw data by reducing the stored player data to only the desired stats. Currently only set up for batters.
 |   |-- features/
 |   |-- models/
 |   |-- utilities/
@@ -105,30 +106,6 @@ Data Scraped
         - On Base + Slugging Percentage (OPS_LHP)
         - Total Bases (TB_LHP)
         - Batting Average on Balls in Play (BAbip_LHP)
-    - * VS Right Handed Starting Pitcher (RHS)
-        - At Bats (AB_RHS)
-        - Runs (R_RHS)
-        - Hits (H_RHS)
-        - Walks / Base on Balls (BB_RHS)
-        - Strikeouts (SO_RHS)
-        - Batting Average (BA_RHS)
-        - On Base Percentage (OBP_RHS)
-        - Slugging Percentage (SLG_RHS)
-        - On Base + Slugging Percentage (OPS_RHS)
-        - Total Bases (TB_RHS)
-        - Batting Average on Balls in Play (BAbip_RHS)
-     * VS Left Handed Starting Pitcher (LHS)
-        - At Bats (AB_LHS)
-        - Runs (R_LHS)
-        - Hits (H_LHS)
-        - Walks / Base on Balls (BB_LHS)
-        - Strikeouts (SO_LHS)
-        - Batting Average (BA_LHS)
-        - On Base Percentage (OBP_LHS)
-        - Slugging Percentage (SLG_LHS)
-        - On Base + Slugging Percentage (OPS_LHS)
-        - Total Bases (TB_LHS)
-        - Batting Average on Balls in Play (BAbip_LHS)
     - 
     -*Home or Away Stats
     - * Home Stats (HO)
