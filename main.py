@@ -1,32 +1,39 @@
+from src.data.prelim_umpire_data import load_umpire_data
+from src.data.prelim_venue_data import load_venue_data
+
 import pandas as pd
 
-from Data.raw.mlb_data_collection import scrape_player_data, scrape_platoon_data, scrape_hmvis_data, scrape_stad_data
-from src.utilities.mlb_player_verification import mlb_player_verification, mlb_name_formatter
-from Data.processed.mlb_data_processing import mlb_raw_stats_cleaner, mlb_platoon_raw_stats_cleaner, mlb_hmvis_raw_stats_cleaner, mlb_stad_raw_stats_cleaner, construct_clean_df, convert_df_to_csv
+players = []
+
+dates = []
 
 def main():
-    # Entry point for the entire program
+    ump_data = load_umpire_data()
+    venue_data = load_venue_data()
+    print(ump_data)
+    print(venue_data)
 
-    # Asking user for player name
-    first_name = input("Enter Player's First Name: ").lower()
-    last_name = input("Enter Player's Last Name: ").lower()
-    year = int(input("Enter Year: "))
+    complete_date_dfs = []
 
-    formatted_name = mlb_name_formatter(first_name, last_name)
+    for date in dates:
+        all_player_data = []
+        for player in players:
+            complete_player_df = create_complete_player_df(date, player)
+            all_player_data.append(complete_player_df)
+        combined_player_df = pd.concat(all_player_data, ignore_index=True)
+        complete_date_dfs.append(combined_player_df)
 
-    formatted_player_key = mlb_player_verification(first_name, last_name, year)
+    empty_df = pd.DataFrame(columns=combined_player_df.columns)
 
-    if formatted_player_key:
+    complete_data = []
 
-        print(f"Gathering Raw Data for {formatted_name}...")
+    for df in complete_date_dfs:
+        complete_data.append(df)
+        complete_data.append(empty_df)
+    
+    complete_df = pd.concat(complete_df, ignore_index=True)
 
-        clean_df = construct_clean_df(formatted_name, formatted_player_key, year)
-        print(clean_df)
-
-        clean_df_csv = convert_df_to_csv(clean_df)
-
-    else:
-        print(f"No data found for {formatted_name} in {year}: {formatted_name} was or is not active.")
+    print(complete_df)
 
     return
 
