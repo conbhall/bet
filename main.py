@@ -20,23 +20,17 @@ def main():
 
     complete_date_dfs = []
 
-    i = 0
 
     for date in dates:
         all_player_data = []
         for player in players:
-            time.sleep(5)
-            if i % 4 == 0:
-                time.sleep(5)
                 #Need to change how long between in order to not maximize requests.
                 #Probably by using a VPN to change IP Address
             try:
                 complete_player_df = create_complete_player_df(date, player, ump_data, venue_data)
                 all_player_data.append(complete_player_df)
-                i += 1
             except:
                 print(f'No data found for {player} on {date}.')
-                i += 1
         if len(all_player_data) > 0:
             combined_player_df = pd.concat(all_player_data, ignore_index=True)
             complete_date_dfs.append(combined_player_df)
